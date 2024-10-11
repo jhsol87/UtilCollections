@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+// 로컬에서 테스트시 사용
+applicationDefaultJvmArgs = ["-Dlog4j.configurationFile=./config/log4j.xml", "-Dutil.logs.dir=./logs", "-Xms4g", "-Xmx8g"]
+
+version = '1.0'
+mainClassName = 'com.igloosec.util.UtilCollections'
+
+sourceCompatibility = 1.8
+
+repositories {
+     jcenter()
+     mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.collections:google-collections:1.0'
+
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    compile 'org.openjdk.jol:jol-core:0.10'
+
+    compile 'org.apache.logging.log4j:log4j-core:2.11.1'
+    compile 'org.apache.logging.log4j:log4j-api:2.11.1'
+
+    runtimeOnly 'org.apache.logging.log4j:log4j-slf4j-impl:2.11.1'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

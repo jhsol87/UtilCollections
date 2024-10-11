@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" name="utilCollectionsLog">
+    <Properties></Properties>
+
+    <ThresholdFilter level="trace"/>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingRandomAccessFile name="utilCollections" fileName="${sys:util.logs.dir}/utilCollections.log" filePattern="${sys:util.logs.dir}/archive/utilCollections-%d{yyyyMMdd}-%i.log.gz" immediateFlush="false" append="true" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--SizeBasedTriggeringPolicy size="4 MB"/-->
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="fileReader" fileName="${sys:util.logs.dir}/fileReader.log" filePattern="${sys:util.logs.dir}/archive/fileReader-%d{yyyyMMdd}-%i.log.gz" immediateFlush="false" append="true" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--SizeBasedTriggeringPolicy size="4 MB"/-->
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="contentReader" fileName="${sys:util.logs.dir}/contentReader.log" filePattern="${sys:util.logs.dir}/archive/contentReader-%d{yyyyMMdd}-%i.log.gz" immediateFlush="false" append="true" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--SizeBasedTriggeringPolicy size="4 MB"/-->
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="jmxReader" fileName="${sys:util.logs.dir}/jmxReader.log" filePattern="${sys:util.logs.dir}/archive/jmxReader-%d{yyyyMMdd}-%i.log.gz" immediateFlush="false" append="true" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--SizeBasedTriggeringPolicy size="4 MB"/-->
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="ESClient" fileName="${sys:util.logs.dir}/ESClient.log" filePattern="${sys:util.logs.dir}/archive/ESClient-%d{yyyyMMdd}-%i.log.gz" immediateFlush="false" append="true" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!--SizeBasedTriggeringPolicy size="4 MB"/-->
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingRandomAccessFile>
+
+        <Async name="ASYNC_utilCollections" includeLocation="true">
+            <AppenderRef ref="utilCollections" />
+        </Async>
+
+        <Async name="ASYNC_fileReader" includeLocation="true">
+            <AppenderRef ref="fileReader" />
+        </Async>
+
+        <Async name="ASYNC_contentReader" includeLocation="true">
+            <AppenderRef ref="contentReader" />
+        </Async>
+
+        <Async name="ASYNC_jmxReader" includeLocation="true">
+            <AppenderRef ref="jmxReader" />
+        </Async>
+
+        <Async name="ASYNC_ESClient" includeLocation="true">
+            <AppenderRef ref="ESClient" />
+        </Async>
+
+        <Async name="ASYNC_Console" includeLocation="true">
+            <AppenderRef ref="Console" />
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.igloosec.util" level="info" additivity="false">
+            <AppenderRef ref="ASYNC_utilCollections"/>
+        </Logger>
+
+        <Logger name="com.igloosec.util.file" level="info" additivity="false">
+            <AppenderRef ref="ASYNC_fileReader"/>
+        </Logger>
+
+        <Logger name="com.igloosec.util.network" level="info" additivity="false">
+            <AppenderRef ref="ASYNC_contentReader"/>
+        </Logger>
+
+        <Logger name="com.igloosec.util.jmx" level="info" additivity="false">
+            <AppenderRef ref="ASYNC_jmxReader"/>
+        </Logger>
+
+        <Logger name="com.igloosec.util.elasticsearch" level="trace" additivity="false">
+            <AppenderRef ref="ASYNC_ESClient"/>
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
